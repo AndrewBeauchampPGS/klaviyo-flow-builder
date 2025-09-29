@@ -1,0 +1,428 @@
+{
+    "data": {
+        "type": "flow",
+        "id": "THMicm",
+        "attributes": {
+            "name": "BS&Co || Abandoned Cart",
+            "status": "draft",
+            "archived": false,
+            "created": "2023-09-20T16:42:26+00:00",
+            "updated": "2023-09-25T21:25:39+00:00",
+            "trigger_type": "Metric",
+            "definition": {
+                "triggers": [
+                    {
+                        "type": "metric",
+                        "id": "RkmndL",
+                        "trigger_filter": null
+                    }
+                ],
+                "profile_filter": {
+                    "condition_groups": [
+                        {
+                            "conditions": [
+                                {
+                                    "type": "profile-metric",
+                                    "metric_id": "TKNikS",
+                                    "measurement": "count",
+                                    "measurement_filter": {
+                                        "type": "numeric",
+                                        "operator": "equals",
+                                        "value": 0
+                                    },
+                                    "timeframe_filter": {
+                                        "type": "date",
+                                        "operator": "flow-start"
+                                    },
+                                    "metric_filters": null
+                                }
+                            ]
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "type": "profile-metric",
+                                    "metric_id": "VyebRm",
+                                    "measurement": "count",
+                                    "measurement_filter": {
+                                        "type": "numeric",
+                                        "operator": "equals",
+                                        "value": 0
+                                    },
+                                    "timeframe_filter": {
+                                        "type": "date",
+                                        "operator": "flow-start"
+                                    },
+                                    "metric_filters": null
+                                }
+                            ]
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "type": "profile-not-in-flow",
+                                    "timeframe_filter": {
+                                        "type": "date",
+                                        "operator": "in-the-last",
+                                        "unit": "day",
+                                        "quantity": 4
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "actions": [
+                    {
+                        "id": "52991848",
+                        "type": "conditional-split",
+                        "data": {
+                            "profile_filter": {
+                                "condition_groups": [
+                                    {
+                                        "conditions": [
+                                            {
+                                                "type": "profile-metric",
+                                                "metric_id": "VwdbGQ",
+                                                "measurement": "count",
+                                                "measurement_filter": {
+                                                    "type": "numeric",
+                                                    "operator": "equals",
+                                                    "value": 0
+                                                },
+                                                "timeframe_filter": {
+                                                    "type": "date",
+                                                    "operator": "alltime"
+                                                },
+                                                "metric_filters": null
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        },
+                        "links": {
+                            "next_if_true": "52991849",
+                            "next_if_false": "52991857"
+                        }
+                    },
+                    {
+                        "id": "52991849",
+                        "type": "time-delay",
+                        "data": {
+                            "unit": "minutes",
+                            "value": 40,
+                            "secondary_value": null,
+                            "timezone": "profile",
+                            "delay_until_weekdays": [
+                                "monday",
+                                "tuesday",
+                                "wednesday",
+                                "thursday",
+                                "friday",
+                                "saturday",
+                                "sunday"
+                            ]
+                        },
+                        "links": {
+                            "next": "53185742"
+                        }
+                    },
+                    {
+                        "id": "52991857",
+                        "type": "time-delay",
+                        "data": {
+                            "unit": "minutes",
+                            "value": 40,
+                            "secondary_value": null,
+                            "timezone": "profile",
+                            "delay_until_weekdays": [
+                                "monday",
+                                "tuesday",
+                                "wednesday",
+                                "thursday",
+                                "friday",
+                                "saturday",
+                                "sunday"
+                            ]
+                        },
+                        "links": {
+                            "next": "53185751"
+                        }
+                    },
+                    {
+                        "id": "53185742",
+                        "type": "send-email",
+                        "data": {
+                            "message": {
+                                "from_email": "admins@bsandco.us",
+                                "from_label": "B.S. & Co.",
+                                "reply_to_email": null,
+                                "cc_email": null,
+                                "bcc_email": null,
+                                "subject_line": "Email #1 Subject",
+                                "preview_text": "",
+                                "template_id": null,
+                                "smart_sending_enabled": false,
+                                "transactional": false,
+                                "add_tracking_params": false,
+                                "custom_tracking_params": null,
+                                "additional_filters": null,
+                                "name": "Abandoned Cart || EM1 - PROSPECTS",
+                                "id": "QUvzS5"
+                            },
+                            "status": "draft"
+                        },
+                        "links": {
+                            "next": "52991851"
+                        }
+                    },
+                    {
+                        "id": "53185751",
+                        "type": "send-email",
+                        "data": {
+                            "message": {
+                                "from_email": "admins@bsandco.us",
+                                "from_label": "B.S. & Co.",
+                                "reply_to_email": null,
+                                "cc_email": null,
+                                "bcc_email": null,
+                                "subject_line": "Email #4 Subject",
+                                "preview_text": "",
+                                "template_id": null,
+                                "smart_sending_enabled": true,
+                                "transactional": false,
+                                "add_tracking_params": false,
+                                "custom_tracking_params": null,
+                                "additional_filters": null,
+                                "name": "Abandoned Cart || EM1",
+                                "id": "Ug4PTd"
+                            },
+                            "status": "draft"
+                        },
+                        "links": {
+                            "next": "52991860"
+                        }
+                    },
+                    {
+                        "id": "52991851",
+                        "type": "time-delay",
+                        "data": {
+                            "unit": "hours",
+                            "value": 20,
+                            "secondary_value": 0,
+                            "timezone": "profile",
+                            "delay_until_weekdays": [
+                                "monday",
+                                "tuesday",
+                                "wednesday",
+                                "thursday",
+                                "friday",
+                                "saturday",
+                                "sunday"
+                            ]
+                        },
+                        "links": {
+                            "next": "53185743"
+                        }
+                    },
+                    {
+                        "id": "52991860",
+                        "type": "time-delay",
+                        "data": {
+                            "unit": "hours",
+                            "value": 20,
+                            "secondary_value": 0,
+                            "timezone": "profile",
+                            "delay_until_weekdays": [
+                                "monday",
+                                "tuesday",
+                                "wednesday",
+                                "thursday",
+                                "friday",
+                                "saturday",
+                                "sunday"
+                            ]
+                        },
+                        "links": {
+                            "next": "53185753"
+                        }
+                    },
+                    {
+                        "id": "53185743",
+                        "type": "send-email",
+                        "data": {
+                            "message": {
+                                "from_email": "admins@bsandco.us",
+                                "from_label": "B.S. & Co.",
+                                "reply_to_email": null,
+                                "cc_email": null,
+                                "bcc_email": null,
+                                "subject_line": "Email #2 Subject",
+                                "preview_text": "",
+                                "template_id": null,
+                                "smart_sending_enabled": false,
+                                "transactional": false,
+                                "add_tracking_params": false,
+                                "custom_tracking_params": null,
+                                "additional_filters": null,
+                                "name": "Abandoned Cart || EM2 - PROSPECTS",
+                                "id": "V3K9ag"
+                            },
+                            "status": "draft"
+                        },
+                        "links": {
+                            "next": "52991853"
+                        }
+                    },
+                    {
+                        "id": "53185753",
+                        "type": "send-email",
+                        "data": {
+                            "message": {
+                                "from_email": "admins@bsandco.us",
+                                "from_label": "B.S. & Co.",
+                                "reply_to_email": null,
+                                "cc_email": null,
+                                "bcc_email": null,
+                                "subject_line": "Email #5 Subject",
+                                "preview_text": "",
+                                "template_id": null,
+                                "smart_sending_enabled": true,
+                                "transactional": false,
+                                "add_tracking_params": false,
+                                "custom_tracking_params": null,
+                                "additional_filters": null,
+                                "name": "Abandoned Cart || EM2",
+                                "id": "TD3MgA"
+                            },
+                            "status": "draft"
+                        },
+                        "links": {
+                            "next": "52991862"
+                        }
+                    },
+                    {
+                        "id": "52991853",
+                        "type": "time-delay",
+                        "data": {
+                            "unit": "days",
+                            "value": 1,
+                            "secondary_value": null,
+                            "timezone": "profile",
+                            "delay_until_weekdays": [
+                                "monday",
+                                "tuesday",
+                                "wednesday",
+                                "thursday",
+                                "friday",
+                                "saturday",
+                                "sunday"
+                            ]
+                        },
+                        "links": {
+                            "next": "53185745"
+                        }
+                    },
+                    {
+                        "id": "52991862",
+                        "type": "time-delay",
+                        "data": {
+                            "unit": "days",
+                            "value": 1,
+                            "secondary_value": null,
+                            "timezone": "profile",
+                            "delay_until_weekdays": [
+                                "monday",
+                                "tuesday",
+                                "wednesday",
+                                "thursday",
+                                "friday",
+                                "saturday",
+                                "sunday"
+                            ]
+                        },
+                        "links": {
+                            "next": "53185755"
+                        }
+                    },
+                    {
+                        "id": "53185745",
+                        "type": "send-email",
+                        "data": {
+                            "message": {
+                                "from_email": "admins@bsandco.us",
+                                "from_label": "B.S. & Co.",
+                                "reply_to_email": null,
+                                "cc_email": null,
+                                "bcc_email": null,
+                                "subject_line": "Email #3 Subject",
+                                "preview_text": "",
+                                "template_id": null,
+                                "smart_sending_enabled": false,
+                                "transactional": false,
+                                "add_tracking_params": false,
+                                "custom_tracking_params": null,
+                                "additional_filters": null,
+                                "name": "Abandoned Cart || EM3 - PROSPECTS",
+                                "id": "Xdiifc"
+                            },
+                            "status": "draft"
+                        },
+                        "links": {
+                            "next": null
+                        }
+                    },
+                    {
+                        "id": "53185755",
+                        "type": "send-email",
+                        "data": {
+                            "message": {
+                                "from_email": "admins@bsandco.us",
+                                "from_label": "B.S. & Co.",
+                                "reply_to_email": null,
+                                "cc_email": null,
+                                "bcc_email": null,
+                                "subject_line": "Email #6 Subject",
+                                "preview_text": "",
+                                "template_id": null,
+                                "smart_sending_enabled": true,
+                                "transactional": false,
+                                "add_tracking_params": false,
+                                "custom_tracking_params": null,
+                                "additional_filters": null,
+                                "name": "Abandoned Cart || EM3",
+                                "id": "RKYDqH"
+                            },
+                            "status": "draft"
+                        },
+                        "links": {
+                            "next": null
+                        }
+                    }
+                ],
+                "entry_action_id": "52991848"
+            }
+        },
+        "relationships": {
+            "flow-actions": {
+                "links": {
+                    "self": "https://a.klaviyo.com/api/flows/THMicm/relationships/flow-actions/",
+                    "related": "https://a.klaviyo.com/api/flows/THMicm/flow-actions/"
+                }
+            },
+            "tags": {
+                "links": {
+                    "self": "https://a.klaviyo.com/api/flows/THMicm/relationships/tags/",
+                    "related": "https://a.klaviyo.com/api/flows/THMicm/tags/"
+                }
+            }
+        },
+        "links": {
+            "self": "https://a.klaviyo.com/api/flows/THMicm/"
+        }
+    },
+    "links": {
+        "self": "https://a.klaviyo.com/api/flows/THMicm?additional-fields%5Bflow%5D=definition"
+    }
+}

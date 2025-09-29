@@ -1,0 +1,439 @@
+{
+    "data": {
+        "type": "flow",
+        "id": "TxGhrL",
+        "attributes": {
+            "name": "BS&Co || Post-Purchase Thank you - Order Count Split",
+            "status": "draft",
+            "archived": false,
+            "created": "2023-09-20T16:44:01+00:00",
+            "updated": "2023-09-25T21:46:46+00:00",
+            "trigger_type": "Metric",
+            "definition": {
+                "triggers": [
+                    {
+                        "type": "metric",
+                        "id": "VyebRm",
+                        "trigger_filter": null
+                    }
+                ],
+                "profile_filter": {
+                    "condition_groups": [
+                        {
+                            "conditions": [
+                                {
+                                    "type": "profile-not-in-flow",
+                                    "timeframe_filter": {
+                                        "type": "date",
+                                        "operator": "in-the-last",
+                                        "unit": "day",
+                                        "quantity": 7
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "actions": [
+                    {
+                        "id": "52991992",
+                        "type": "conditional-split",
+                        "data": {
+                            "profile_filter": {
+                                "condition_groups": [
+                                    {
+                                        "conditions": [
+                                            {
+                                                "type": "profile-metric",
+                                                "metric_id": "VyebRm",
+                                                "measurement": "count",
+                                                "measurement_filter": {
+                                                    "type": "numeric",
+                                                    "operator": "equals",
+                                                    "value": 1
+                                                },
+                                                "timeframe_filter": {
+                                                    "type": "date",
+                                                    "operator": "alltime"
+                                                },
+                                                "metric_filters": null
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        },
+                        "links": {
+                            "next_if_true": "52991993",
+                            "next_if_false": "52992003"
+                        }
+                    },
+                    {
+                        "id": "52991993",
+                        "type": "time-delay",
+                        "data": {
+                            "unit": "minutes",
+                            "value": 20,
+                            "secondary_value": null,
+                            "timezone": "profile",
+                            "delay_until_weekdays": [
+                                "monday",
+                                "tuesday",
+                                "wednesday",
+                                "thursday",
+                                "friday",
+                                "saturday",
+                                "sunday"
+                            ]
+                        },
+                        "links": {
+                            "next": "53186113"
+                        }
+                    },
+                    {
+                        "id": "52992003",
+                        "type": "time-delay",
+                        "data": {
+                            "unit": "minutes",
+                            "value": 20,
+                            "secondary_value": null,
+                            "timezone": "profile",
+                            "delay_until_weekdays": [
+                                "monday",
+                                "tuesday",
+                                "wednesday",
+                                "thursday",
+                                "friday",
+                                "saturday",
+                                "sunday"
+                            ]
+                        },
+                        "links": {
+                            "next": "53186144"
+                        }
+                    },
+                    {
+                        "id": "53186113",
+                        "type": "send-email",
+                        "data": {
+                            "message": {
+                                "from_email": "admins@bsandco.us",
+                                "from_label": "B.S. & Co.",
+                                "reply_to_email": null,
+                                "cc_email": null,
+                                "bcc_email": null,
+                                "subject_line": "Email #4 Subject",
+                                "preview_text": "",
+                                "template_id": null,
+                                "smart_sending_enabled": false,
+                                "transactional": false,
+                                "add_tracking_params": false,
+                                "custom_tracking_params": null,
+                                "additional_filters": null,
+                                "name": "Post-Purchase || First Time || EM1",
+                                "id": "UDERu3"
+                            },
+                            "status": "draft"
+                        },
+                        "links": {
+                            "next": "52991996"
+                        }
+                    },
+                    {
+                        "id": "53186144",
+                        "type": "send-email",
+                        "data": {
+                            "message": {
+                                "from_email": "admins@bsandco.us",
+                                "from_label": "B.S. & Co.",
+                                "reply_to_email": null,
+                                "cc_email": null,
+                                "bcc_email": null,
+                                "subject_line": "Email #5 Subject",
+                                "preview_text": "",
+                                "template_id": null,
+                                "smart_sending_enabled": false,
+                                "transactional": false,
+                                "add_tracking_params": false,
+                                "custom_tracking_params": null,
+                                "additional_filters": null,
+                                "name": "Post-Purchase || Repeat || EM1",
+                                "id": "R82AGi"
+                            },
+                            "status": "draft"
+                        },
+                        "links": {
+                            "next": "52992006"
+                        }
+                    },
+                    {
+                        "id": "52991996",
+                        "type": "time-delay",
+                        "data": {
+                            "unit": "days",
+                            "value": 1,
+                            "secondary_value": null,
+                            "timezone": "profile",
+                            "delay_until_weekdays": [
+                                "monday",
+                                "tuesday",
+                                "wednesday",
+                                "thursday",
+                                "friday",
+                                "saturday",
+                                "sunday"
+                            ]
+                        },
+                        "links": {
+                            "next": "53186114"
+                        }
+                    },
+                    {
+                        "id": "52992006",
+                        "type": "time-delay",
+                        "data": {
+                            "unit": "days",
+                            "value": 1,
+                            "secondary_value": null,
+                            "timezone": "profile",
+                            "delay_until_weekdays": [
+                                "monday",
+                                "tuesday",
+                                "wednesday",
+                                "thursday",
+                                "friday",
+                                "saturday",
+                                "sunday"
+                            ]
+                        },
+                        "links": {
+                            "next": "53186148"
+                        }
+                    },
+                    {
+                        "id": "53186114",
+                        "type": "send-email",
+                        "data": {
+                            "message": {
+                                "from_email": "admins@bsandco.us",
+                                "from_label": "B.S. & Co.",
+                                "reply_to_email": null,
+                                "cc_email": null,
+                                "bcc_email": null,
+                                "subject_line": "Email #5 Subject",
+                                "preview_text": "",
+                                "template_id": null,
+                                "smart_sending_enabled": false,
+                                "transactional": false,
+                                "add_tracking_params": false,
+                                "custom_tracking_params": null,
+                                "additional_filters": null,
+                                "name": "Post-Purchase || First Time || EM2",
+                                "id": "Ws6JYw"
+                            },
+                            "status": "draft"
+                        },
+                        "links": {
+                            "next": "52991999"
+                        }
+                    },
+                    {
+                        "id": "53186148",
+                        "type": "send-email",
+                        "data": {
+                            "message": {
+                                "from_email": "admins@bsandco.us",
+                                "from_label": "B.S. & Co.",
+                                "reply_to_email": null,
+                                "cc_email": null,
+                                "bcc_email": null,
+                                "subject_line": "Email #6 Subject",
+                                "preview_text": "",
+                                "template_id": null,
+                                "smart_sending_enabled": false,
+                                "transactional": false,
+                                "add_tracking_params": false,
+                                "custom_tracking_params": null,
+                                "additional_filters": null,
+                                "name": "Post-Purchase || Repeat || EM2",
+                                "id": "XEH67B"
+                            },
+                            "status": "draft"
+                        },
+                        "links": {
+                            "next": "52992008"
+                        }
+                    },
+                    {
+                        "id": "52991999",
+                        "type": "time-delay",
+                        "data": {
+                            "unit": "days",
+                            "value": 2,
+                            "secondary_value": null,
+                            "timezone": "profile",
+                            "delay_until_weekdays": [
+                                "monday",
+                                "tuesday",
+                                "wednesday",
+                                "thursday",
+                                "friday",
+                                "saturday",
+                                "sunday"
+                            ]
+                        },
+                        "links": {
+                            "next": "53186115"
+                        }
+                    },
+                    {
+                        "id": "52992008",
+                        "type": "time-delay",
+                        "data": {
+                            "unit": "days",
+                            "value": 2,
+                            "secondary_value": null,
+                            "timezone": "profile",
+                            "delay_until_weekdays": [
+                                "monday",
+                                "tuesday",
+                                "wednesday",
+                                "thursday",
+                                "friday",
+                                "saturday",
+                                "sunday"
+                            ]
+                        },
+                        "links": {
+                            "next": "53186151"
+                        }
+                    },
+                    {
+                        "id": "53186115",
+                        "type": "send-email",
+                        "data": {
+                            "message": {
+                                "from_email": "admins@bsandco.us",
+                                "from_label": "B.S. & Co.",
+                                "reply_to_email": null,
+                                "cc_email": null,
+                                "bcc_email": null,
+                                "subject_line": "Email #6 Subject",
+                                "preview_text": "",
+                                "template_id": null,
+                                "smart_sending_enabled": false,
+                                "transactional": false,
+                                "add_tracking_params": false,
+                                "custom_tracking_params": null,
+                                "additional_filters": null,
+                                "name": "Post-Purchase || First Time || EM3",
+                                "id": "QYbQ7F"
+                            },
+                            "status": "draft"
+                        },
+                        "links": {
+                            "next": "52992001"
+                        }
+                    },
+                    {
+                        "id": "53186151",
+                        "type": "send-email",
+                        "data": {
+                            "message": {
+                                "from_email": "admins@bsandco.us",
+                                "from_label": "B.S. & Co.",
+                                "reply_to_email": null,
+                                "cc_email": null,
+                                "bcc_email": null,
+                                "subject_line": "Email #7 Subject",
+                                "preview_text": "",
+                                "template_id": null,
+                                "smart_sending_enabled": false,
+                                "transactional": false,
+                                "add_tracking_params": false,
+                                "custom_tracking_params": null,
+                                "additional_filters": null,
+                                "name": "Post-Purchase || Repeat || EM3",
+                                "id": "UCf7mS"
+                            },
+                            "status": "draft"
+                        },
+                        "links": {
+                            "next": null
+                        }
+                    },
+                    {
+                        "id": "52992001",
+                        "type": "time-delay",
+                        "data": {
+                            "unit": "days",
+                            "value": 2,
+                            "secondary_value": null,
+                            "timezone": "profile",
+                            "delay_until_weekdays": [
+                                "monday",
+                                "tuesday",
+                                "wednesday",
+                                "thursday",
+                                "friday",
+                                "saturday",
+                                "sunday"
+                            ]
+                        },
+                        "links": {
+                            "next": "53186117"
+                        }
+                    },
+                    {
+                        "id": "53186117",
+                        "type": "send-email",
+                        "data": {
+                            "message": {
+                                "from_email": "admins@bsandco.us",
+                                "from_label": "B.S. & Co.",
+                                "reply_to_email": null,
+                                "cc_email": null,
+                                "bcc_email": null,
+                                "subject_line": "Email #7 Subject",
+                                "preview_text": "",
+                                "template_id": null,
+                                "smart_sending_enabled": false,
+                                "transactional": false,
+                                "add_tracking_params": false,
+                                "custom_tracking_params": null,
+                                "additional_filters": null,
+                                "name": "Post-Purchase || First Time || EM4",
+                                "id": "S9AEZx"
+                            },
+                            "status": "draft"
+                        },
+                        "links": {
+                            "next": null
+                        }
+                    }
+                ],
+                "entry_action_id": "52991992"
+            }
+        },
+        "relationships": {
+            "flow-actions": {
+                "links": {
+                    "self": "https://a.klaviyo.com/api/flows/TxGhrL/relationships/flow-actions/",
+                    "related": "https://a.klaviyo.com/api/flows/TxGhrL/flow-actions/"
+                }
+            },
+            "tags": {
+                "links": {
+                    "self": "https://a.klaviyo.com/api/flows/TxGhrL/relationships/tags/",
+                    "related": "https://a.klaviyo.com/api/flows/TxGhrL/tags/"
+                }
+            }
+        },
+        "links": {
+            "self": "https://a.klaviyo.com/api/flows/TxGhrL/"
+        }
+    },
+    "links": {
+        "self": "https://a.klaviyo.com/api/flows/TxGhrL?additional-fields%5Bflow%5D=definition"
+    }
+}

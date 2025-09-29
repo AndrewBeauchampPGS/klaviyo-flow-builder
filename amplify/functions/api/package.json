@@ -1,0 +1,9 @@
+{
+  "name": "klaviyo-flow-builder-api",
+  "version": "1.0.0",
+  "description": "Lambda function for Klaviyo Flow Builder API",
+  "main": "index.js",
+  "dependencies": {
+    "axios": "^1.6.0"
+  }
+}

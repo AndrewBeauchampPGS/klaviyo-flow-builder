@@ -1,0 +1,245 @@
+{
+    "data": {
+        "type": "flow",
+        "id": "XuuPWt",
+        "attributes": {
+            "name": "BS&Co || Welcome Series",
+            "status": "draft",
+            "archived": false,
+            "created": "2023-09-20T16:43:01+00:00",
+            "updated": "2023-09-25T21:47:18+00:00",
+            "trigger_type": "Added to List",
+            "definition": {
+                "triggers": [
+                    {
+                        "type": "list",
+                        "id": "MSWUcv"
+                    }
+                ],
+                "profile_filter": {
+                    "condition_groups": [
+                        {
+                            "conditions": [
+                                {
+                                    "type": "profile-metric",
+                                    "metric_id": "VyebRm",
+                                    "measurement": "count",
+                                    "measurement_filter": {
+                                        "type": "numeric",
+                                        "operator": "equals",
+                                        "value": 0
+                                    },
+                                    "timeframe_filter": {
+                                        "type": "date",
+                                        "operator": "flow-start"
+                                    },
+                                    "metric_filters": null
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "actions": [
+                    {
+                        "id": "53186269",
+                        "type": "send-email",
+                        "data": {
+                            "message": {
+                                "from_email": "admins@bsandco.us",
+                                "from_label": "B.S. & Co.",
+                                "reply_to_email": null,
+                                "cc_email": null,
+                                "bcc_email": null,
+                                "subject_line": "Email #1 Subject",
+                                "preview_text": "",
+                                "template_id": null,
+                                "smart_sending_enabled": false,
+                                "transactional": false,
+                                "add_tracking_params": false,
+                                "custom_tracking_params": null,
+                                "additional_filters": null,
+                                "name": "Welcome || EM1",
+                                "id": "RkfmAS"
+                            },
+                            "status": "draft"
+                        },
+                        "links": {
+                            "next": "52991907"
+                        }
+                    },
+                    {
+                        "id": "52991907",
+                        "type": "time-delay",
+                        "data": {
+                            "unit": "days",
+                            "value": 2,
+                            "secondary_value": null,
+                            "timezone": "profile",
+                            "delay_until_time": "19:00:00",
+                            "delay_until_weekdays": [
+                                "monday",
+                                "tuesday",
+                                "wednesday",
+                                "thursday",
+                                "friday",
+                                "saturday",
+                                "sunday"
+                            ]
+                        },
+                        "links": {
+                            "next": "53186274"
+                        }
+                    },
+                    {
+                        "id": "53186274",
+                        "type": "send-email",
+                        "data": {
+                            "message": {
+                                "from_email": "admins@bsandco.us",
+                                "from_label": "B.S. & Co.",
+                                "reply_to_email": null,
+                                "cc_email": null,
+                                "bcc_email": null,
+                                "subject_line": "Email #2 Subject",
+                                "preview_text": "",
+                                "template_id": null,
+                                "smart_sending_enabled": false,
+                                "transactional": false,
+                                "add_tracking_params": false,
+                                "custom_tracking_params": null,
+                                "additional_filters": null,
+                                "name": "Welcome || EM2",
+                                "id": "RSD9S7"
+                            },
+                            "status": "draft"
+                        },
+                        "links": {
+                            "next": "52991911"
+                        }
+                    },
+                    {
+                        "id": "52991911",
+                        "type": "time-delay",
+                        "data": {
+                            "unit": "days",
+                            "value": 2,
+                            "secondary_value": null,
+                            "timezone": "profile",
+                            "delay_until_time": "19:00:00",
+                            "delay_until_weekdays": [
+                                "monday",
+                                "tuesday",
+                                "wednesday",
+                                "thursday",
+                                "friday",
+                                "saturday",
+                                "sunday"
+                            ]
+                        },
+                        "links": {
+                            "next": "53186277"
+                        }
+                    },
+                    {
+                        "id": "53186277",
+                        "type": "send-email",
+                        "data": {
+                            "message": {
+                                "from_email": "admins@bsandco.us",
+                                "from_label": "B.S. & Co.",
+                                "reply_to_email": null,
+                                "cc_email": null,
+                                "bcc_email": null,
+                                "subject_line": "Email #3 Subject",
+                                "preview_text": "",
+                                "template_id": null,
+                                "smart_sending_enabled": false,
+                                "transactional": false,
+                                "add_tracking_params": false,
+                                "custom_tracking_params": null,
+                                "additional_filters": null,
+                                "name": "Welcome || EM3",
+                                "id": "VZSHai"
+                            },
+                            "status": "draft"
+                        },
+                        "links": {
+                            "next": "52991913"
+                        }
+                    },
+                    {
+                        "id": "52991913",
+                        "type": "time-delay",
+                        "data": {
+                            "unit": "days",
+                            "value": 2,
+                            "secondary_value": null,
+                            "timezone": "profile",
+                            "delay_until_time": "19:00:00",
+                            "delay_until_weekdays": [
+                                "monday",
+                                "tuesday",
+                                "wednesday",
+                                "thursday",
+                                "friday",
+                                "saturday",
+                                "sunday"
+                            ]
+                        },
+                        "links": {
+                            "next": "53186279"
+                        }
+                    },
+                    {
+                        "id": "53186279",
+                        "type": "send-email",
+                        "data": {
+                            "message": {
+                                "from_email": "admins@bsandco.us",
+                                "from_label": "B.S. & Co.",
+                                "reply_to_email": null,
+                                "cc_email": null,
+                                "bcc_email": null,
+                                "subject_line": "Email #4 Subject",
+                                "preview_text": "",
+                                "template_id": null,
+                                "smart_sending_enabled": false,
+                                "transactional": false,
+                                "add_tracking_params": false,
+                                "custom_tracking_params": null,
+                                "additional_filters": null,
+                                "name": "Welcome || EM4",
+                                "id": "Xbhy4a"
+                            },
+                            "status": "draft"
+                        },
+                        "links": {
+                            "next": null
+                        }
+                    }
+                ],
+                "entry_action_id": "53186269"
+            }
+        },
+        "relationships": {
+            "flow-actions": {
+                "links": {
+                    "self": "https://a.klaviyo.com/api/flows/XuuPWt/relationships/flow-actions/",
+                    "related": "https://a.klaviyo.com/api/flows/XuuPWt/flow-actions/"
+                }
+            },
+            "tags": {
+                "links": {
+                    "self": "https://a.klaviyo.com/api/flows/XuuPWt/relationships/tags/",
+                    "related": "https://a.klaviyo.com/api/flows/XuuPWt/tags/"
+                }
+            }
+        },
+        "links": {
+            "self": "https://a.klaviyo.com/api/flows/XuuPWt/"
+        }
+    },
+    "links": {
+        "self": "https://a.klaviyo.com/api/flows/XuuPWt?additional-fields%5Bflow%5D=definition"
+    }
+}

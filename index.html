@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Klaviyo Flow Builder</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 30px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .help-text {
+            margin-top: 5px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .api-permissions {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            border-left: 4px solid #ffc107;
+        }
+
+        .api-permissions strong {
+            color: #856404;
+        }
+
+        .api-permissions ul {
+            margin: 10px 0 0 20px;
+            color: #856404;
+        }
+
+        .flows-section {
+            margin-top: 30px;
+        }
+
+        .flows-section h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .flows-list {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .flow-item {
+            background: white;
+            padding: 20px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            transition: all 0.3s;
+        }
+
+        .flow-item:hover {
+            border-color: #667eea;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .flow-item.unavailable {
+            opacity: 0.6;
+        }
+
+        .flow-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .flow-checkbox {
+            margin-top: 5px;
+        }
+
+        .flow-checkbox input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .flow-checkbox input[type="checkbox"]:disabled {
+            cursor: not-allowed;
+        }
+
+        .flow-icon {
+            font-size: 2em;
+            min-width: 40px;
+        }
+
+        .flow-details {
+            flex: 1;
+        }
+
+        .flow-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .flow-name {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .flow-status {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            font-weight: 600;
+        }
+
+        .status-available {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-coming-soon {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .flow-description {
+            color: #666;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        .select-buttons {
+            margin-bottom: 20px;
+        }
+
+        .select-btn {
+            padding: 8px 16px;
+            margin-right: 10px;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .select-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .progress-section {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .progress-section.active {
+            display: block;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: #e0e0e0;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .progress-text {
+            text-align: center;
+            color: #666;
+            margin-top: 10px;
+        }
+
+        .results-section {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            background: #d4edda;
+            border-radius: 8px;
+            border: 2px solid #4caf50;
+        }
+
+        .results-section.active {
+            display: block;
+        }
+
+        .results-section.has-errors {
+            background: #fff3cd;
+            border-color: #ffc107;
+        }
+
+        .results-title {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #155724;
+        }
+
+        .has-errors .results-title {
+            color: #856404;
+        }
+
+        .results-summary {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: white;
+            font-size: 14px;
+        }
+
+        .footer a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: opacity 0.3s;
+        }
+
+        .footer a:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔄 Klaviyo Flow Builder</h1>
+            <p>Deploy pre-built flow templates to your Klaviyo account</p>
+        </header>
+
+        <div class="content">
+            <div class="input-group">
+                <label for="apiKey">Klaviyo Private API Key</label>
+                <input
+                    type="password"
+                    id="apiKey"
+                    placeholder="Enter your Klaviyo Private API Key"
+                    autocomplete="off"
+                >
+                <p class="help-text">⚠️ Your API key is used securely and never stored. If you refresh this page, you'll need to enter it again. We do not store your API key anywhere - this is for your security.</p>
+                <div class="api-permissions">
+                    <strong>⚠️ Required API Permissions:</strong>
+                    <ul>
+                        <li><code>flows:full</code> - To create the flows in your account</li>
+                        <li><code>metrics:read</code> - To map metric IDs for flow filters</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="flows-section">
+                <h2>Available Flow Templates</h2>
+                <div class="flows-list">
+                    <div class="select-buttons">
+                        <button class="select-btn" onclick="selectAll()">Select All</button>
+                        <button class="select-btn" onclick="selectNone()">Select None</button>
+                    </div>
+                    <div id="flowsList"></div>
+                    <button id="deployButton" class="btn" onclick="deployFlows()" disabled style="margin-top: 20px;">
+                        Deploy Selected Flows
+                    </button>
+                </div>
+            </div>
+
+            <div class="progress-section" id="progressSection">
+                <h3>Deploying Flows...</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressBar" style="width: 0%">0%</div>
+                </div>
+                <div class="progress-text" id="progressText">Starting deployment...</div>
+            </div>
+
+            <div class="results-section" id="resultsSection">
+                <h3 class="results-title">Deployment Complete!</h3>
+                <div class="results-summary" id="resultsSummary"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:3002/api';
+
+        const flowTemplates = [
+            {
+                id: 'abandoned-cart',
+                name: 'Abandoned Cart',
+                description: 'Recover abandoned carts with email reminders',
+                icon: '🛒',
+                available: true
+            },
+            {
+                id: 'post-purchase',
+                name: 'Post-Purchase Thank You',
+                description: 'Thank customers after their first purchase',
+                icon: '🎉',
+                available: true
+            },
+            {
+                id: 'upsell',
+                name: 'Upsell',
+                description: 'Increase order value with product recommendations',
+                icon: '💰',
+                available: true
+            },
+            {
+                id: 'site-abandon',
+                name: 'Site Abandonment',
+                description: 'Re-engage visitors who left without purchasing',
+                icon: '🏃',
+                available: true
+            },
+            {
+                id: 'customer-winback',
+                name: 'Customer Winback',
+                description: 'Win back customers who haven\'t purchased recently',
+                icon: '🔄',
+                available: true
+            },
+            {
+                id: 'browse-abandonment',
+                name: 'Browse Abandonment',
+                description: 'Remind customers of products they viewed',
+                icon: '👀',
+                available: true
+            },
+            {
+                id: 'abandoned-checkout',
+                name: 'Abandoned Checkout',
+                description: 'Recover checkouts that were started but not completed',
+                icon: '💳',
+                available: true
+            }
+        ];
+
+        function init() {
+            displayFlows();
+        }
+
+        function displayFlows() {
+            const list = document.getElementById('flowsList');
+            list.innerHTML = flowTemplates.map(flow => `
+                <div class="flow-item ${flow.available ? '' : 'unavailable'}">
+                    <div class="flow-checkbox">
+                        <input type="checkbox"
+                               id="flow-${flow.id}"
+                               value="${flow.id}"
+                               ${flow.available ? '' : 'disabled'}
+                               onchange="updateButton()">
+                    </div>
+                    <div class="flow-icon">${flow.icon}</div>
+                    <div class="flow-details">
+                        <div class="flow-header">
+                            <span class="flow-name">${flow.name}</span>
+                            <span class="flow-status status-${flow.available ? 'available' : 'coming-soon'}">
+                                ${flow.available ? 'Available' : 'Coming Soon'}
+                            </span>
+                        </div>
+                        <div class="flow-description">${flow.description}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function selectAll() {
+            document.querySelectorAll('input[type="checkbox"]:not(:disabled)').forEach(cb => cb.checked = true);
+            updateButton();
+        }
+
+        function selectNone() {
+            document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+            updateButton();
+        }
+
+        function updateButton() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+            const button = document.getElementById('deployButton');
+            button.disabled = checkboxes.length === 0;
+            button.textContent = checkboxes.length > 0
+                ? `Deploy ${checkboxes.length} Selected Flow${checkboxes.length > 1 ? 's' : ''}`
+                : 'Deploy Selected Flows';
+        }
+
+        async function deployFlows() {
+            const apiKey = document.getElementById('apiKey').value.trim();
+            if (!apiKey) {
+                alert('Please enter your Klaviyo API Key');
+                return;
+            }
+
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+            const selectedIds = Array.from(checkboxes).map(cb => cb.value);
+
+            if (selectedIds.length === 0) return;
+
+            document.getElementById('deployButton').disabled = true;
+            document.getElementById('progressSection').classList.add('active');
+            document.getElementById('resultsSection').classList.remove('active');
+
+            const results = [];
+            let successCount = 0;
+            let errorCount = 0;
+
+            for (let i = 0; i < selectedIds.length; i++) {
+                const templateId = selectedIds[i];
+                const template = flowTemplates.find(t => t.id === templateId);
+                const progress = Math.round(((i + 1) / selectedIds.length) * 100);
+
+                document.getElementById('progressBar').style.width = progress + '%';
+                document.getElementById('progressBar').textContent = progress + '%';
+                document.getElementById('progressText').textContent = `Deploying ${template.name}...`;
+
+                try {
+                    const response = await fetch(`${API_URL}/deploy`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ apiKey, templateId, customName: null })
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        results.push(`✅ ${template.name} - Deployed successfully`);
+                        successCount++;
+                    } else {
+                        results.push(`❌ ${template.name} - Error: ${data.error}`);
+                        errorCount++;
+                    }
+                } catch (error) {
+                    results.push(`❌ ${template.name} - Error: ${error.message}`);
+                    errorCount++;
+                }
+            }
+
+            document.getElementById('progressSection').classList.remove('active');
+
+            const resultsSection = document.getElementById('resultsSection');
+            resultsSection.classList.add('active');
+            if (errorCount > 0) {
+                resultsSection.classList.add('has-errors');
+            } else {
+                resultsSection.classList.remove('has-errors');
+            }
+
+            document.getElementById('resultsSummary').innerHTML = `
+                <p><strong>Successfully deployed:</strong> ${successCount} flow${successCount !== 1 ? 's' : ''}</p>
+                ${errorCount > 0 ? `<p><strong>Failed:</strong> ${errorCount} flow${errorCount !== 1 ? 's' : ''}</p>` : ''}
+                <ul style="margin-top: 15px; line-height: 1.8;">
+                    ${results.map(r => `<li>${r}</li>`).join('')}
+                </ul>
+            `;
+
+            checkboxes.forEach(cb => cb.checked = false);
+            updateButton();
+            document.getElementById('deployButton').disabled = false;
+        }
+
+        init();
+    </script>
+
+    <div class="footer">
+        <p>Built by <a href="https://bsandco.us" target="_blank" rel="noopener">BS&Co</a>, an email marketing agency</p>
+    </div>
+</body>
+</html>
