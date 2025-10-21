@@ -441,30 +441,65 @@
 
         /* Navigation Header */
         .nav-header {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 15px 30px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            margin-bottom: 0;
+            padding: 12px 0;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        .nav-header .breadcrumb {
+        .breadcrumb {
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 14px;
-            color: #666;
+            gap: 8px;
+            padding: 0 30px;
         }
 
-        .nav-header a {
-            color: #667eea;
+        .breadcrumb-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .breadcrumb a {
+            color: rgba(255, 255, 255, 0.7);
             text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s;
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
         }
 
-        .nav-header a:hover {
-            color: #764ba2;
-            text-decoration: underline;
+        .breadcrumb a:hover {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .breadcrumb-text {
+            font-size: 13px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .breadcrumb-icon {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+        }
+
+        .chevron-icon {
+            width: 16px;
+            height: 16px;
+            color: rgba(255, 255, 255, 0.5);
+            flex-shrink: 0;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
         }
 
         /* Hero Section */
@@ -571,21 +606,42 @@
         /* Footer Styles */
         .footer {
             text-align: center;
-            padding: 20px;
+            padding: 48px 30px;
             color: white;
-            font-size: 14px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
 
-        .footer a {
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: opacity 0.2s;
+        }
+
+        .footer-links a:hover {
+            opacity: 0.7;
+        }
+
+        .footer-credit {
+            font-size: 13px;
+            opacity: 0.8;
+        }
+
+        .footer-credit a {
             color: white;
             text-decoration: none;
             font-weight: 600;
-            transition: opacity 0.3s;
         }
 
-        .footer a:hover {
-            opacity: 0.8;
+        .footer-credit a:hover {
             text-decoration: underline;
         }
     </style>
@@ -603,18 +659,33 @@
         </div>
     </div>
 
-    <!-- Navigation Header -->
-    <div class="nav-header">
-        <div class="breadcrumb">
-            <a href="https://bsandco.us/tools">← BS&Co Tools</a>
-            <span>/</span>
-            <span>Flow Builder</span>
-        </div>
-    </div>
-
     <div class="container">
         <!-- Hero Section -->
         <header style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+            <!-- Navigation Header -->
+            <div class="nav-header">
+                <nav aria-label="Breadcrumb" class="breadcrumb">
+                    <a href="https://bsandco.us">
+                        <svg class="breadcrumb-icon" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M9.293 2.293a1 1 0 011.414 0l7 7A1 1 0 0117 11h-1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-3a1 1 0 00-1-1H9a1 1 0 00-1 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-6H3a1 1 0 01-.707-1.707l7-7z" clip-rule="evenodd" />
+                        </svg>
+                        <span class="sr-only">Home</span>
+                    </a>
+                    <div class="breadcrumb-item">
+                        <svg class="chevron-icon" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                        </svg>
+                        <a href="https://bsandco.us/tools" class="breadcrumb-text">Tools</a>
+                    </div>
+                    <div class="breadcrumb-item">
+                        <svg class="chevron-icon" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                        </svg>
+                        <span class="breadcrumb-text" aria-current="page">Flow Builder</span>
+                    </div>
+                </nav>
+            </div>
+
             <div class="hero">
                 <h1>Deploy Klaviyo Email Flow Templates in Seconds</h1>
                 <p class="subtitle">Launch Proven Automation Flows Without Manual Setup</p>
@@ -974,13 +1045,15 @@
 
     <!-- Footer -->
     <div class="footer">
-        <p>
-            <a href="https://bsandco.us/tools">View All Tools</a> |
-            <a href="https://klaviyo-bill-reducer.bsandco.us/">Bill Reducer</a> |
-            <a href="https://klaviyo-audience-builder.bsandco.us/">Audience Builder</a> |
+        <div class="footer-links">
+            <a href="https://bsandco.us/tools">View All Tools</a>
+            <a href="https://klaviyo-bill-reducer.bsandco.us/">Bill Reducer</a>
+            <a href="https://klaviyo-audience-builder.bsandco.us/">Audience Builder</a>
             <a href="https://klaviyo-list-splitter.bsandco.us/">List Splitter</a>
-        </p>
-        <p style="margin-top: 10px; opacity: 0.8;">Free Klaviyo Tools by <a href="https://bsandco.us/">BS&Co</a></p>
+        </div>
+        <div class="footer-credit">
+            Free Klaviyo Tools by <a href="https://bsandco.us/">BS&Co</a>
+        </div>
     </div>
 </body>
 </html>
