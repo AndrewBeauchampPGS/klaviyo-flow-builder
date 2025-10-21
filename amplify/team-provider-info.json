@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-klaviyoflowbuilder-dev-0ceb9-authRole",
+      "UnauthRoleArn": "arn:aws:iam::061039794616:role/amplify-klaviyoflowbuilder-dev-0ceb9-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::061039794616:role/amplify-klaviyoflowbuilder-dev-0ceb9-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-klaviyoflowbuilder-dev-0ceb9-deployment",
+      "UnauthRoleName": "amplify-klaviyoflowbuilder-dev-0ceb9-unauthRole",
+      "StackName": "amplify-klaviyoflowbuilder-dev-0ceb9",
+      "StackId": "arn:aws:cloudformation:us-east-1:061039794616:stack/amplify-klaviyoflowbuilder-dev-0ceb9/9bce6800-9d52-11f0-96d9-0ee4caf3c09d",
+      "AmplifyAppId": "d2igbwo2lduwcu"
+    }
+  }
+}

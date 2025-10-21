@@ -3,6 +3,71 @@ const { flowTemplates } = require('./flowTemplates');
 
 const KLAVIYO_API_BASE = 'https://a.klaviyo.com/api';
 
+// Slack webhook configuration
+const SLACK_WEBHOOK_URL = process.env.SLACK_WEBHOOK_URL;
+
+// Send notification to Slack
+async function sendSlackNotification(email, accountName, flows, successCount) {
+    if (!SLACK_WEBHOOK_URL) {
+        console.log('Slack webhook URL not configured');
+        return;
+    }
+
+    try {
+        const flowNames = flows.map(f =>
+            flowTemplates[f] ? flowTemplates[f].name : f
+        ).join(', ');
+
+        const message = {
+            blocks: [
+                {
+                    type: 'section',
+                    text: {
+                        type: 'mrkdwn',
+                        text: `*Klaviyo Flow Builder Used*`
+                    }
+                },
+                {
+                    type: 'section',
+                    fields: [
+                        {
+                            type: 'mrkdwn',
+                            text: `*User:*\n${email}`
+                        },
+                        {
+                            type: 'mrkdwn',
+                            text: `*Account:*\n${accountName || 'Unknown'}`
+                        },
+                        {
+                            type: 'mrkdwn',
+                            text: `*Flows Deployed:*\n${successCount} of ${flows.length}`
+                        },
+                        {
+                            type: 'mrkdwn',
+                            text: `*Selected Flows:*\n${flowNames}`
+                        }
+                    ]
+                },
+                {
+                    type: 'context',
+                    elements: [
+                        {
+                            type: 'mrkdwn',
+                            text: `Used at ${new Date().toISOString()}`
+                        }
+                    ]
+                }
+            ]
+        };
+
+        await axios.post(SLACK_WEBHOOK_URL, message);
+        console.log('Slack notification sent successfully');
+    } catch (error) {
+        console.error('Error sending Slack notification:', error.message);
+        // Don't fail the main request if Slack notification fails
+    }
+}
+
 const makeKlaviyoRequest = async (apiKey, method, endpoint, data = null) => {
   const config = {
     method,
@@ -24,19 +89,23 @@ const makeKlaviyoRequest = async (apiKey, method, endpoint, data = null) => {
 
 exports.handler = async (event) => {
   const headers = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type',
     'Content-Type': 'application/json'
   };
 
-  if (event.httpMethod === 'OPTIONS') {
-    return { statusCode: 200, headers, body: '' };
+  if (event.httpMethod === 'OPTIONS' || event.requestContext?.http?.method === 'OPTIONS') {
+    return {
+      statusCode: 200,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: ''
+    };
   }
 
   try {
     const body = JSON.parse(event.body);
     const { apiKey } = body;
-    const path = event.path;
+    const path = event.rawPath || event.path;
 
     if (!apiKey) {
       return {
@@ -74,7 +143,7 @@ exports.handler = async (event) => {
     }
 
     if (path === '/deploy') {
-      const { templateId, customName } = body;
+      const { templateId, customName, email } = body;
 
       if (!templateId || !flowTemplates[templateId]) {
         return {
@@ -94,6 +163,27 @@ exports.handler = async (event) => {
       const flowPayload = template.process(customName, metricMap);
 
       const newFlow = await makeKlaviyoRequest(apiKey, 'POST', '/flows/', flowPayload);
+
+      // Get account name for Slack notification
+      let accountName = 'Unknown';
+      try {
+        const accountData = await makeKlaviyoRequest(apiKey, 'GET', '/accounts/');
+        if (accountData.data && accountData.data.length > 0) {
+          accountName = accountData.data[0].attributes?.company_name ||
+                        accountData.data[0].attributes?.contact_email ||
+                        'Unknown';
+        }
+      } catch (accountError) {
+        console.error('Could not fetch account info:', accountError.message);
+      }
+
+      // Send Slack notification (single flow deployment)
+      await sendSlackNotification(
+        email || 'unknown@user.com',
+        accountName,
+        [templateId],
+        1
+      );
 
       return {
         statusCode: 200,

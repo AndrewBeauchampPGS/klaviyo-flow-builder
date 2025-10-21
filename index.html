@@ -3,7 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Klaviyo Flow Builder</title>
+    <title>How to Build Klaviyo Flows - Deploy Email Templates Instantly</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Learn how to build Klaviyo flows fast. Free tool deploys proven email flow templates (abandoned cart, welcome series, winback) in seconds. No manual flow setup required.">
+    <meta name="keywords" content="how to build Klaviyo flows, how to create Klaviyo automation, Klaviyo flow templates, Klaviyo flow examples, abandoned cart flow Klaviyo, welcome series Klaviyo, Klaviyo email automation setup">
+    <meta name="author" content="BS&Co Tools">
+    <link rel="canonical" href="https://klaviyo-flow-builder.bsandco.us/">
+
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="How to Build Klaviyo Flows - Email Templates Instantly">
+    <meta property="og:description" content="Free tool shows you how to build Klaviyo flows fast. Deploy proven email automation templates (abandoned cart, welcome, winback) without manual setup.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://klaviyo-flow-builder.bsandco.us/">
+    <meta property="og:site_name" content="BS&Co Klaviyo Tools">
+
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="How to Build Klaviyo Flows - Email Automation Templates">
+    <meta name="twitter:description" content="Free tool for building Klaviyo flows. Deploy abandoned cart, welcome series, and winback automation templates instantly.">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Klaviyo Flow Builder",
+      "description": "Free tool to deploy proven email flow templates in Klaviyo including abandoned cart, welcome series, winback flows, and post-purchase automation",
+      "url": "https://klaviyo-flow-builder.bsandco.us/",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web Browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": "Abandoned cart flow, Welcome series, Winback flow, Post-purchase flow, Thank you flow, Browse abandonment"
+    }
+    </script>
+
     <style>
         * {
             margin: 0;
@@ -327,13 +365,261 @@
             opacity: 0.8;
             text-decoration: underline;
         }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .modal-content h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+
+        .modal-content p {
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .modal-content input[type="email"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            transition: border-color 0.3s;
+        }
+
+        .modal-content input[type="email"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .modal-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            width: 100%;
+        }
+
+        .modal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Navigation Header */
+        .nav-header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 0;
+        }
+
+        .nav-header .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .nav-header a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .nav-header a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 20px 30px;
+        }
+
+        .hero h1 {
+            font-size: 32px;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .hero .subtitle {
+            font-size: 18px;
+            margin-bottom: 10px;
+            opacity: 0.95;
+        }
+
+        .hero .description {
+            font-size: 15px;
+            opacity: 0.85;
+            line-height: 1.6;
+        }
+
+        /* Educational Content */
+        .educational-content {
+            padding: 40px 30px;
+            background: #f8f9fa;
+        }
+
+        .educational-content h2 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .educational-content h3 {
+            color: #667eea;
+            font-size: 20px;
+            margin: 25px 0 15px 0;
+        }
+
+        .educational-content p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .educational-content ul, .educational-content ol {
+            margin: 15px 0 15px 30px;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .educational-content li {
+            margin-bottom: 10px;
+        }
+
+        .educational-content strong {
+            color: #333;
+        }
+
+        .tool-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .tool-link-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s;
+        }
+
+        .tool-link-card:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .tool-link-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .tool-link-card p {
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .tool-link-card a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Footer Styles */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: white;
+            font-size: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .footer a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: opacity 0.3s;
+        }
+
+        .footer a:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
+    <!-- Email Modal -->
+    <div id="emailModal" class="modal">
+        <div class="modal-content">
+            <h2>Welcome! 👋</h2>
+            <p>Please enter your email to continue using the Klaviyo Flow Builder.</p>
+            <form id="emailForm">
+                <input type="email" id="userEmail" placeholder="your@email.com" required>
+                <button type="submit" class="modal-btn">Continue</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Navigation Header -->
+    <div class="nav-header">
+        <div class="breadcrumb">
+            <a href="https://bsandco.us/tools">← BS&Co Tools</a>
+            <span>/</span>
+            <span>Flow Builder</span>
+        </div>
+    </div>
+
     <div class="container">
-        <header>
-            <h1>🔄 Klaviyo Flow Builder</h1>
-            <p>Deploy pre-built flow templates to your Klaviyo account</p>
+        <!-- Hero Section -->
+        <header style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+            <div class="hero">
+                <h1>Deploy Klaviyo Email Flow Templates in Seconds</h1>
+                <p class="subtitle">Launch Proven Automation Flows Without Manual Setup</p>
+                <p class="description">Free tool to instantly deploy ready-made email flows: abandoned cart recovery, welcome series, winback campaigns, post-purchase thank you, and more.</p>
+            </div>
         </header>
 
         <div class="content">
@@ -382,10 +668,95 @@
                 <div class="results-summary" id="resultsSummary"></div>
             </div>
         </div>
+
+        <!-- Educational Content -->
+        <div class="educational-content">
+            <h2>How to Use the Klaviyo Flow Builder</h2>
+            <p>This tool instantly deploys pre-built email automation flow templates directly into your Klaviyo account. Skip the hours of manual flow setup and launch proven automation in seconds:</p>
+
+            <ol>
+                <li><strong>Enter Your API Key</strong> - Create a Klaviyo API key with flows:write permission</li>
+                <li><strong>Select Your Flows</strong> - Choose from proven flow templates (abandoned cart, welcome series, winback, etc.)</li>
+                <li><strong>Click Deploy</strong> - The tool automatically creates complete flows in your Klaviyo account</li>
+                <li><strong>Customize and Activate</strong> - Review, customize copy/design, and turn on your flows</li>
+            </ol>
+
+            <h3>Available Email Flow Templates</h3>
+            <p>The tool includes battle-tested email automation flows that typically generate the highest ROI for ecommerce brands:</p>
+
+            <ul>
+                <li><strong>Abandoned Cart Recovery</strong> - Multi-step sequence to recover lost cart revenue (3-email series)</li>
+                <li><strong>Welcome Series</strong> - Onboard new subscribers and drive first purchase (3-5 emails)</li>
+                <li><strong>Post-Purchase Thank You</strong> - Thank customers and encourage reviews/referrals</li>
+                <li><strong>Customer Winback</strong> - Re-engage lapsed customers who haven't purchased recently</li>
+                <li><strong>Browse Abandonment</strong> - Remind visitors of products they viewed but didn't add to cart</li>
+                <li><strong>Upsell & Cross-sell</strong> - Recommend complementary products post-purchase</li>
+                <li><strong>VIP Customer Recognition</strong> - Reward and retain your best customers</li>
+                <li><strong>Site Abandonment</strong> - Capture visitors who left without taking action</li>
+            </ul>
+
+            <h3>Why Automated Flows Are Critical</h3>
+            <p>Email automation flows are the backbone of profitable email marketing programs. Here's why they matter:</p>
+
+            <ul>
+                <li><strong>Higher Revenue Per Email</strong> - Flows generate 3-5x more revenue per email than campaigns</li>
+                <li><strong>Always-On Marketing</strong> - Flows work 24/7 without manual sending</li>
+                <li><strong>Perfect Timing</strong> - Triggered emails reach customers exactly when they're most engaged</li>
+                <li><strong>Better Personalization</strong> - Dynamic content based on customer behavior and data</li>
+                <li><strong>Scalable Growth</strong> - Set up once, benefit forever as your list grows</li>
+            </ul>
+
+            <h3>Flow Setup Best Practices</h3>
+            <ul>
+                <li><strong>Start with abandoned cart</strong> - Typically the highest-ROI flow for ecommerce brands</li>
+                <li><strong>Customize before launching</strong> - Update copy, images, and offers to match your brand voice</li>
+                <li><strong>Set appropriate delays</strong> - Don't email too soon or wait too long (abandoned cart: 1hr, 24hr, 72hr)</li>
+                <li><strong>Add discount codes strategically</strong> - Use in 2nd or 3rd email, not the first</li>
+                <li><strong>Test and optimize</strong> - Monitor performance and A/B test subject lines, offers, timing</li>
+                <li><strong>Monitor flow metrics</strong> - Track conversion rates, revenue per recipient, and click rates monthly</li>
+            </ul>
+
+            <h3>Expected Performance Benchmarks</h3>
+            <p>Well-optimized email flows typically achieve these benchmarks (results vary by industry):</p>
+            <ul>
+                <li><strong>Abandoned Cart:</strong> 10-15% recovery rate, 15-30% open rate</li>
+                <li><strong>Welcome Series:</strong> 50-70% open rate, 5-10% conversion to first purchase</li>
+                <li><strong>Post-Purchase:</strong> 40-60% open rate, 15-25% review/referral completion</li>
+                <li><strong>Winback:</strong> 20-30% open rate, 3-7% reactivation rate</li>
+                <li><strong>Browse Abandonment:</strong> 15-25% open rate, 5-8% conversion rate</li>
+            </ul>
+
+            <h3>Other Klaviyo Optimization Tools</h3>
+            <div class="tool-links">
+                <div class="tool-link-card">
+                    <h4><a href="https://klaviyo-bill-reducer.bsandco.us/">Bill Reducer</a></h4>
+                    <p>Identify and remove inactive profiles to reduce Klaviyo costs by 20-30%</p>
+                </div>
+                <div class="tool-link-card">
+                    <h4><a href="https://klaviyo-audience-builder.bsandco.us/">Audience Builder</a></h4>
+                    <p>Create 22 pre-built customer lifecycle segments in one click</p>
+                </div>
+                <div class="tool-link-card">
+                    <h4><a href="https://klaviyo-list-splitter.bsandco.us/">List Splitter</a></h4>
+                    <p>Split large customer lists into smaller segments for targeted campaigns</p>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
-        const API_URL = 'http://localhost:3002/api';
+        const API_URL = window.location.hostname === 'localhost'
+            ? 'http://localhost:3002/api'
+            : 'https://dzpclnisfcme4evk3aetjz5hpm0sdkeq.lambda-url.us-east-1.on.aws';
+
+        // Email modal functionality
+        let userEmail = null;
+
+        // Email validation
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
 
         const flowTemplates = [
             {
@@ -441,6 +812,26 @@
 
         function init() {
             displayFlows();
+
+            // Load stored email if exists
+            const storedEmail = localStorage.getItem('klaviyo_user_email');
+            if (storedEmail) {
+                userEmail = storedEmail;
+            }
+
+            // Handle email form submission
+            document.getElementById('emailForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = document.getElementById('userEmail').value.trim();
+
+                if (email && validateEmail(email)) {
+                    userEmail = email;
+                    localStorage.setItem('klaviyo_user_email', email);
+                    document.getElementById('emailModal').classList.remove('active');
+                    // Continue with flow deployment after email is submitted
+                    proceedWithDeployment();
+                }
+            });
         }
 
         function displayFlows() {
@@ -494,6 +885,18 @@
                 return;
             }
 
+            // Check if we have an email, if not show modal
+            if (!userEmail) {
+                document.getElementById('emailModal').classList.add('active');
+                return;
+            }
+
+            proceedWithDeployment();
+        }
+
+        async function proceedWithDeployment() {
+            const apiKey = document.getElementById('apiKey').value.trim();
+
             const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
             const selectedIds = Array.from(checkboxes).map(cb => cb.value);
 
@@ -520,7 +923,12 @@
                     const response = await fetch(`${API_URL}/deploy`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ apiKey, templateId, customName: null })
+                        body: JSON.stringify({
+                            apiKey,
+                            templateId,
+                            customName: null,
+                            email: userEmail || localStorage.getItem('klaviyo_user_email') || 'unknown@user.com'
+                        })
                     });
 
                     const data = await response.json();
@@ -564,8 +972,15 @@
         init();
     </script>
 
+    <!-- Footer -->
     <div class="footer">
-        <p>Built by <a href="https://bsandco.us" target="_blank" rel="noopener">BS&Co</a>, an email marketing agency</p>
+        <p>
+            <a href="https://bsandco.us/tools">View All Tools</a> |
+            <a href="https://klaviyo-bill-reducer.bsandco.us/">Bill Reducer</a> |
+            <a href="https://klaviyo-audience-builder.bsandco.us/">Audience Builder</a> |
+            <a href="https://klaviyo-list-splitter.bsandco.us/">List Splitter</a>
+        </p>
+        <p style="margin-top: 10px; opacity: 0.8;">Free Klaviyo Tools by <a href="https://bsandco.us/">BS&Co</a></p>
     </div>
 </body>
 </html>

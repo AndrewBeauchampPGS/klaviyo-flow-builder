@@ -4,7 +4,9 @@
   "description": "Klaviyo Flow Builder - Create and manage Klaviyo flows",
   "scripts": {
     "start": "node test-server.js",
-    "install-lambda": "cd amplify/functions/api && pnpm install"
+    "install-lambda": "cd amplify/functions/api && pnpm install",
+    "deploy": "amplify push",
+    "publish": "amplify publish"
   },
   "devDependencies": {
     "cors": "^2.8.5",
