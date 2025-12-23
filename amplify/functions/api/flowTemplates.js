@@ -44,7 +44,24 @@ function replaceMetricIds(obj, metricMap, sourceAccountApiKey) {
   }
 }
 
-function processFlowForDeployment(flowData, newName, metricMap) {
+function replaceSenderInfo(obj, senderEmail, senderLabel) {
+  if (Array.isArray(obj)) {
+    obj.forEach(item => replaceSenderInfo(item, senderEmail, senderLabel));
+  } else if (obj && typeof obj === 'object') {
+    // Check if this is a message object with from_email
+    if (obj.from_email !== undefined) {
+      obj.from_email = senderEmail;
+      obj.from_label = senderLabel;
+    }
+    Object.values(obj).forEach(value => {
+      if (typeof value === 'object') {
+        replaceSenderInfo(value, senderEmail, senderLabel);
+      }
+    });
+  }
+}
+
+function processFlowForDeployment(flowData, newName, metricMap, senderInfo) {
   const processed = JSON.parse(JSON.stringify(flowData));
 
   delete processed.data.id;
@@ -82,6 +99,11 @@ function processFlowForDeployment(flowData, newName, metricMap) {
     replaceMetricIds(processed.data.attributes.definition, metricMap);
   }
 
+  // Replace sender info if provided
+  if (senderInfo && senderInfo.email && senderInfo.label) {
+    replaceSenderInfo(processed.data.attributes.definition, senderInfo.email, senderInfo.label);
+  }
+
   if (processed.data.attributes.definition.triggers) {
     processed.data.attributes.definition.triggers.forEach(trigger => {
       if (trigger.type === 'list') {
@@ -99,43 +121,43 @@ const flowTemplates = {
     name: 'Abandoned Cart',
     description: 'Recover abandoned carts with email reminders',
     rawDefinition: abandonedCartFlow,
-    process: (newName, metricMap) => processFlowForDeployment(abandonedCartFlow, newName || 'Abandoned Cart', metricMap)
+    process: (newName, metricMap, senderInfo) => processFlowForDeployment(abandonedCartFlow, newName || 'Abandoned Cart', metricMap, senderInfo)
   },
   'post-purchase': {
     name: 'Post-Purchase Thank You',
     description: 'Thank customers after their first purchase',
     rawDefinition: postPurchaseFlow,
-    process: (newName, metricMap) => processFlowForDeployment(postPurchaseFlow, newName || 'Post-Purchase Thank You', metricMap)
+    process: (newName, metricMap, senderInfo) => processFlowForDeployment(postPurchaseFlow, newName || 'Post-Purchase Thank You', metricMap, senderInfo)
   },
   'upsell': {
     name: 'Upsell',
     description: 'Increase order value with product recommendations',
     rawDefinition: upsellFlow,
-    process: (newName, metricMap) => processFlowForDeployment(upsellFlow, newName || 'Upsell', metricMap)
+    process: (newName, metricMap, senderInfo) => processFlowForDeployment(upsellFlow, newName || 'Upsell', metricMap, senderInfo)
   },
   'site-abandon': {
     name: 'Site Abandonment',
     description: 'Re-engage visitors who left without purchasing',
     rawDefinition: siteAbandonFlow,
-    process: (newName, metricMap) => processFlowForDeployment(siteAbandonFlow, newName || 'Site Abandonment', metricMap)
+    process: (newName, metricMap, senderInfo) => processFlowForDeployment(siteAbandonFlow, newName || 'Site Abandonment', metricMap, senderInfo)
   },
   'customer-winback': {
     name: 'Customer Winback',
     description: 'Win back customers who haven\'t purchased recently',
     rawDefinition: customerWinbackFlow,
-    process: (newName, metricMap) => processFlowForDeployment(customerWinbackFlow, newName || 'Customer Winback', metricMap)
+    process: (newName, metricMap, senderInfo) => processFlowForDeployment(customerWinbackFlow, newName || 'Customer Winback', metricMap, senderInfo)
   },
   'browse-abandonment': {
     name: 'Browse Abandonment',
     description: 'Remind customers of products they viewed',
     rawDefinition: browseAbandonmentFlow,
-    process: (newName, metricMap) => processFlowForDeployment(browseAbandonmentFlow, newName || 'Browse Abandonment', metricMap)
+    process: (newName, metricMap, senderInfo) => processFlowForDeployment(browseAbandonmentFlow, newName || 'Browse Abandonment', metricMap, senderInfo)
   },
   'abandoned-checkout': {
     name: 'Abandoned Checkout',
     description: 'Recover checkouts that were started but not completed',
     rawDefinition: abandonedCheckoutFlow,
-    process: (newName, metricMap) => processFlowForDeployment(abandonedCheckoutFlow, newName || 'Abandoned Checkout', metricMap)
+    process: (newName, metricMap, senderInfo) => processFlowForDeployment(abandonedCheckoutFlow, newName || 'Abandoned Checkout', metricMap, senderInfo)
   }
 };
 

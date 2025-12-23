@@ -117,12 +117,15 @@ exports.handler = async (event) => {
 
     if (path === '/connect') {
       const accountData = await makeKlaviyoRequest(apiKey, 'GET', '/accounts/');
+      const attributes = accountData.data[0].attributes;
       return {
         statusCode: 200,
         headers,
         body: JSON.stringify({
           success: true,
-          account: accountData.data[0].attributes
+          account: attributes,
+          senderEmail: attributes.contact_information?.default_sender_email,
+          senderName: attributes.contact_information?.default_sender_name
         })
       };
     }
@@ -153,6 +156,20 @@ exports.handler = async (event) => {
         };
       }
 
+      // Fetch account info to get sender details
+      const accountData = await makeKlaviyoRequest(apiKey, 'GET', '/accounts/');
+      const contactInfo = accountData.data[0].attributes.contact_information;
+      const senderEmail = contactInfo?.default_sender_email;
+      const senderLabel = contactInfo?.default_sender_name;
+
+      if (!senderEmail || !senderLabel) {
+        return {
+          statusCode: 400,
+          headers,
+          body: JSON.stringify({ error: 'Account is missing default sender email or name. Please configure these in Klaviyo settings.' })
+        };
+      }
+
       const metricsData = await makeKlaviyoRequest(apiKey, 'GET', '/metrics/');
       const metricMap = {};
       metricsData.data.forEach(metric => {
@@ -160,22 +177,13 @@ exports.handler = async (event) => {
       });
 
       const template = flowTemplates[templateId];
-      const flowPayload = template.process(customName, metricMap);
+      const senderInfo = { email: senderEmail, label: senderLabel };
+      const flowPayload = template.process(customName, metricMap, senderInfo);
 
       const newFlow = await makeKlaviyoRequest(apiKey, 'POST', '/flows/', flowPayload);
 
-      // Get account name for Slack notification
-      let accountName = 'Unknown';
-      try {
-        const accountData = await makeKlaviyoRequest(apiKey, 'GET', '/accounts/');
-        if (accountData.data && accountData.data.length > 0) {
-          accountName = accountData.data[0].attributes?.company_name ||
-                        accountData.data[0].attributes?.contact_email ||
-                        'Unknown';
-        }
-      } catch (accountError) {
-        console.error('Could not fetch account info:', accountError.message);
-      }
+      // Use account data we already fetched for Slack notification
+      const accountName = contactInfo?.organization_name || senderLabel || 'Unknown';
 
       // Send Slack notification (single flow deployment)
       await sendSlackNotification(
